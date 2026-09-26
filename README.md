@@ -8,9 +8,17 @@ The contract is deliberately small:
 
 Inno Setup owns installation, upgrades, Start Menu integration, Add/Remove Programs, and uninstall. This repository owns no runtime updater, download protocol, package manager, product scripting, or application configuration.
 
-## Build
+## Builder setup
 
-Install Inno Setup 6 or 7 on the Windows builder, then:
+One time on a Windows builder:
+
+```powershell
+winget install --id JRSoftware.InnoSetup --exact --source winget --silent --accept-package-agreements --accept-source-agreements --disable-interactivity
+```
+
+`winsetup.ps1` discovers user-local or Program Files installations of Inno Setup 6 or 7. `INNO_SETUP_ISCC` is an explicit override when a builder keeps it elsewhere.
+
+## Build
 
 ```powershell
 .\winsetup.ps1 `
@@ -45,3 +53,15 @@ A product owns:
 That is all.
 
 If an application later demonstrates a real packaging need that this template cannot express, add the smallest generic option that earns its existence. Do not add product-specific scripts to this repository.
+
+## Proven Windows behavior
+
+The initial wrapper was dogfooded on the accepted Win11 VM with two distinct real Howl bundles and one stable AppId:
+
+- fresh per-user install into `%LOCALAPPDATA%\\Programs\\Howl`;
+- normal Start Menu and Installed Apps registration;
+- second Setup EXE updated the same installation in place and replaced Howl's executable/bridge with the new bytes;
+- the updated installed `howl-odin.exe` launched successfully;
+- Inno's generated uninstaller removed the application directory, Installed Apps entry, and Start Menu shortcut.
+
+Application configuration is not installer-owned and is therefore not removed by this generic template.
