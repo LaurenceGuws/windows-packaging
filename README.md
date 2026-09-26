@@ -58,7 +58,7 @@ If an application later demonstrates a real packaging need that this template ca
 
 The initial wrapper was dogfooded on the accepted Win11 VM with two distinct real Howl bundles and one stable AppId:
 
-- fresh per-user install into `%LOCALAPPDATA%\\Programs\\Howl`;
+- fresh per-user install into `%LOCALAPPDATA%\Programs\Howl`;
 - normal Start Menu and Installed Apps registration;
 - second Setup EXE updated the same installation in place and replaced Howl's executable/bridge with the new bytes;
 - the updated installed `howl-odin.exe` launched successfully;
