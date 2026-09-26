@@ -83,7 +83,7 @@ $args = @(
     $template
 )
 
-& $iscc @args
+& $iscc @args | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Fail "ISCC.exe failed with exit code $LASTEXITCODE"
 }
